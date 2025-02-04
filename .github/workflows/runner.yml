@@ -4,15 +4,15 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # Manually trigger the workflow
+  workflow_dispatch:
 
 jobs:
   run-containers:
-    runs-on: ubuntu-latest  # Runs on GitHub runner
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        parent-container: [A, B]  # Matrix to handle A and B as parents
+        parent-container: [A, B]  # Matrix for running A and B containers
 
     steps:
       - name: Checkout repository
@@ -21,12 +21,10 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and Run Parent Container (A or B)
-        uses: shivamkonkar/matrix@v1
-        with:
-          parent-container: '${{ matrix.parent-container }}'  # Pass matrix value to the action
+      - name: Build Parent Container
+        run: |
+          docker build -t parent-child-container .
 
       - name: Run Parent Container (A or B) using Docker.sock
         run: |
-          docker build -t parent-child-container .
-          docker run --rm -e PARENT_CONTAINER=${{ matrix.parent-container }} parent-child-container
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -e PARENT_CONTAINER=${{ matrix.parent-container }} parent-child-container
