@@ -24,7 +24,7 @@ jobs:
       - name: Build and Run Parent Container (A or B)
         uses: shivamkonkar/matrix@v0
         with:
-          test_suites: '${{ matrix.parent-container }}'  # Pass matrix value to the action
+          parent-container: '${{ matrix.parent-container }}'  # Pass matrix value to the action
 
       - name: Run Parent Container (A or B) using Docker.sock
         run: |
