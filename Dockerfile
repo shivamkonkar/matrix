@@ -1,3 +1,5 @@
+# Dockerfile: Used to set up the container for your custom action
+
 # Use Docker-in-Docker base image
 FROM docker:latest
 
