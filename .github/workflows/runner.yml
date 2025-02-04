@@ -22,7 +22,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build and Run Parent Container (A or B)
-        uses: ./  # Refers to your custom action in the repo
+        uses: shivamkonkar/matrix@v0
         with:
           test_suites: '${{ matrix.parent-container }}'  # Pass matrix value to the action
 
